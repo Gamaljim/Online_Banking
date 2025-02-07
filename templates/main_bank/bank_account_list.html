@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Your Accounts</h2>
+        {% for account in accounts %}
+            <p>{{ account.account_type }} ({{ account.account_number }}) - Balance: {{ account.balance }}</p>
+        {% empty %}
+    <p>You have no bank accounts yet.</p>
+        {% endfor %}
+</body>
+</html>

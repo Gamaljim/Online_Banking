@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul style="list-style: none; display: flex; gap: 1rem;">
+              {% if user.is_authenticated %}
+                <!-- User is logged in: show these links -->
+                <li>
+                  <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                  </form>
+                </li>
+                <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+                <li><a href="{% url 'account_list' %}">My Bank Accounts</a></li>
+                <li><a href="{% url 'create_account' %}">Open a New Account</a></li>
+              {% else %}
+                <!-- User is logged out: show login/register -->
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
+              {% endif %}
+            </ul>
+          </nav>
+      </header>
+    
+      <hr>
+    
+      <!-- Main content -->
+      <main>
+        {% if messages %}
+            {% for message in messages %}
+               <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <h1>Welcome to the Home Page!</h1>
+        <p>This is a placeholder for the home page content.</p>
+      </main>
+</body>
+</html>
