@@ -6,6 +6,7 @@ from .views import (
     CreateTransactionView,
     DepositWithdrawView,
     HomeView,
+    TransactionListView,
 )
 
 urlpatterns = [
@@ -18,4 +19,5 @@ urlpatterns = [
         name="create_transaction",
     ),
     path("deposit-withdraw/", DepositWithdrawView.as_view(), name="depost-withdraw"),
+    path("transaction-list/", TransactionListView.as_view(), name="transaction_list"),
 ]

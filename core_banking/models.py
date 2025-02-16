@@ -84,7 +84,7 @@ class Transaction(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="sent_transactions",
-    )  # related name confusion
+    )
     recipient = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

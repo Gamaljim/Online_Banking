@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, TemplateView
@@ -118,3 +119,25 @@ class DepositWithdrawView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
             return self.form_invalid(form)
 
         return redirect(self.success_url)
+
+
+class TransactionListView(LoginRequiredMixin, ListView):
+    model = Transaction
+    template_name = "main_bank/transaction_history.html"
+    context_object_name = "transactions"
+
+    def get_queryset(self):
+        """
+        Return all transactions relevant to the logged in user.
+        This could mean:
+         - user is the 'sender'
+         - or user is the 'recipient'
+         - or user = 'sender' in deposit scenario, etc.
+
+        We'll do a Q filter so that the user sees anything where they're involved.
+        """
+
+        user = self.request.user
+        return Transaction.objects.filter(Q(sender=user) | Q(recipient=user)).order_by(
+            "-created_at"
+        )
