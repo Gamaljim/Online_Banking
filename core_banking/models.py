@@ -209,6 +209,7 @@ class Transaction(models.Model):
             raise ValueError("Transaction type not supported")
 
     def _handle_transfer(self):
+        # getting sender and amount from the transaction
         sender = self.sender
         amount = self.amount
 
