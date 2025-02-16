@@ -6,10 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">Login</button>
+    <h2>Make a Deposit</h2>
+    <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Deposit</button>
     </form>
 </body>
 </html>

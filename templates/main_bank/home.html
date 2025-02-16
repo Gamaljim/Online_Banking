@@ -1,45 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <title>My Banking App</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f3f3;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #4a90e2; /* Light blue color */
+      padding: 1rem;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    nav li {
+      display: inline-block;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    nav button {
+      background: #f5f5f5;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    nav button:hover {
+      background: #e0e0e0;
+    }
+
+    /* Container for your main content */
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+      color: #555;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .messages p {
+      background: #e6ffd8;
+      border: 1px solid #c2f9b4;
+      padding: 0.8rem;
+      border-radius: 3px;
+      margin-bottom: 1rem;
+      color: #2d4f1b;
+    }
+
+    .wallet-balance {
+      color: #fff;
+      font-weight: 600;
+      margin-left: 1rem;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul style="list-style: none; display: flex; gap: 1rem;">
-              {% if user.is_authenticated %}
-                <!-- User is logged in: show these links -->
-                <li>
-                  <form action="{% url 'logout' %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit">Logout</button>
-                  </form>
-                </li>
-                <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
-                <li><a href="{% url 'account_list' %}">My Bank Accounts</a></li>
-                <li><a href="{% url 'create_account' %}">Open a New Account</a></li>
-              {% else %}
-                <!-- User is logged out: show login/register -->
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'register' %}">Register</a></li>
-              {% endif %}
-            </ul>
-          </nav>
-      </header>
-    
-      <hr>
-    
-      <!-- Main content -->
-      <main>
-        {% if messages %}
-            {% for message in messages %}
-               <p>{{ message }}</p>
-            {% endfor %}
+  <header>
+    <nav>
+      <ul>
+        {% if user.is_authenticated %}
+          <!-- User is logged in: show these links -->
+          <li>
+            <form action="{% url 'logout' %}" method="POST">
+              {% csrf_token %}
+              <button type="submit">Logout</button>
+            </form>
+          </li>
+          <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+          <li><a href="{% url 'account_list' %}">My Bank Accounts</a></li>
+          <li><a href="{% url 'create_account' %}">Open a New Account</a></li>
+          <li><a href="{% url 'create_transaction' %}">Send Money to Another User</a></li>
+          <li><a href="{% url 'depost-withdraw' %}">Deposit or Withdraw</a></li>
+
+          {% if wallet %}
+            <span class="wallet-balance">
+              Wallet Balance: ${{ wallet.balance }}
+            </span>
+          {% endif %}
+        {% else %}
+          <!-- User is logged out: show login/register -->
+          <li><a href="{% url 'login' %}">Login</a></li>
+          <li><a href="{% url 'register' %}">Register</a></li>
         {% endif %}
-        <h1>Welcome to the Home Page!</h1>
-        <p>This is a placeholder for the home page content.</p>
-      </main>
-</body>
-</html>
+      </ul>
+    </nav>
+  </header>
+
+  <hr>
+
+  <main>
+    <!-- M

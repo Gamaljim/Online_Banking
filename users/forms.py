@@ -1,5 +1,7 @@
 from django import forms
+
 from .models import CustomUser
+
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -7,9 +9,18 @@ class UserRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['email', 'first_name', 'last_name', 'phone_number', 'profile_picture', 'national_id', 'address', 'date_of_birth', 'bio']
+        fields = [
+            "email",
+            "first_name",
+            "last_name",
+            "phone_number",
+            "profile_picture",
+            "national_id",
+            "address",
+            "date_of_birth",
+            "bio",
+        ]
 
-        
     def clean(self):
         """
         Check that the two password entries match"""
@@ -22,7 +33,7 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords do not match")
 
         return cleaned_data
-    
+
     def save(self, commit=True):
         """
         Override save to set the user's password properly"""
